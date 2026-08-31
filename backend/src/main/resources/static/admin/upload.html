@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CareLink · App 部署管理</title>
+  <style>
+    :root {
+      --primary: #1677ff;
+      --primary-dark: #0958d9;
+      --success: #52c41a;
+      --success-bg: #f6ffed;
+      --danger: #f5222d;
+      --danger-bg: #fff2f0;
+      --warning: #fa8c16;
+      --warning-bg: #fffbe6;
+      --bg: #f0f2f5;
+      --card: #ffffff;
+      --border: #e8eaed;
+      --text: #1d2129;
+      --muted: #6b7280;
+      --radius: 10px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* Header */
+    .header {
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      padding: 0 32px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 1px 4px rgba(0,0,0,.06);
+    }
+    .header .logo { font-size: 17px; font-weight: 700; color: var(--primary); }
+    .header .sub { color: var(--muted); font-size: 13px; }
+    .header .tag {
+      margin-left: auto;
+      background: #e6f4ff;
+      color: var(--primary);
+      padding: 3px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    /* Container */
+    .container { max-width: 860px; margin: 0 auto; padding: 28px 20px 60px; }
+
+    /* Cards */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-title .icon { font-size: 18px; }
+
+    /* Form */
+    .form-group { margin-bottom: 16px; }
+    .form-label {
+      display: block;
+      font-weight: 600;
+      font-size: 13px;
+      margin-bottom: 6px;
+      color: #374151;
+    }
+    .form-label .req { color: var(--danger); margin-left: 2px; }
+    .form-hint { font-size: 11.5px; color: var(--muted); margin-top: 4px; }
+    input[type="text"],
+    input[type="number"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: inherit;
+      transition: border-color .2s, box-shadow .2s;
+      background: #fafbfc;
+    }
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(22,119,255,.1);
+      background: #fff;
+    }
+    textarea { resize: vertical; min-height: 72px; }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 580px) { .two-col { grid-template-columns: 1fr; } }
+
+    /* File Upload */
+    .upload-zone {
+      border: 2px dashed var(--border);
+      border-radius: var(--radius);
+      padding: 36px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: all .2s;
+      background: #fafbfc;
+      position: relative;
+    }
+    .upload-zone:hover, .upload-zone.dragover {
+      border-color: var(--primary);
+      background: #e6f4ff;
+    }
+    .upload-zone .icon { font-size: 40px; margin-bottom: 8px; }
+    .upload-zone .title { font-size: 15px; font-weight: 600; color: var(--text); }
+    .upload-zone .hint { font-size: 12px; color: var(--muted); margin-top: 4px; }
+    .upload-zone input[type="file"] {
+      position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+    }
+    #fileInfo {
+      margin-top: 10px;
+      padding: 10px 14px;
+      background: var(--success-bg);
+      border: 1px solid #b7eb8f;
+      border-radius: 8px;
+      font-size: 13px;
+      color: #237804;
+      display: none;
+    }
+    #fileInfo.show { display: block; }
+
+    /* Toggle */
+    .toggle-row { display: flex; align-items: center; gap: 10px; margin-top: 16px; }
+    .toggle {
+      position: relative; width: 44px; height: 24px; cursor: pointer;
+    }
+    .toggle input { opacity: 0; width: 0; height: 0; }
+    .toggle .slider {
+      position: absolute; inset: 0;
+      background: #ccc;
+      border-radius: 24px;
+      transition: .25s;
+    }
+    .toggle .slider:before {
+      content: ''; position: absolute;
+      width: 18px; height: 18px; border-radius: 50%;
+      background: white; left: 3px; bottom: 3px;
+      transition: .25s;
+    }
+    .toggle input:checked + .slider { background: var(--primary); }
+    .toggle input:checked + .slider:before { transform: translateX(20px); }
+    .toggle-label { font-size: 13px; color: var(--muted); }
+    .toggle-label strong { color: var(--text); }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      padding: 10px 24px; border-radius: 8px;
+      font-size: 14px; font-weight: 600; font-family: inherit;
+      cursor: pointer; border: none; transition: all .2s;
+    }
+    .btn-primary {
+      background: var(--primary); color: #fff;
+      width: 100%; margin-top: 20px;
+    }
+    .btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); }
+    .btn-primary:active { transform: translateY(0); }
+    .btn-primary:disabled { background: #92b5e8; cursor: not-allowed; transform: none; }
+    .btn-secondary {
+      background: #f0f0f0; color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:hover { background: #e6e6e6; }
+    .btn-success { background: var(--success); color: #fff; }
+    .btn-sm { padding: 6px 14px; font-size: 13px; }
+
+    /* Status Banner */
+    .status-banner {
+      display: flex; align-items: center; gap: 12px;
+      padding: 14px 18px; border-radius: var(--radius);
+      margin-bottom: 20px; font-size: 13.5px;
+    }
+    .status-banner.success { background: var(--success-bg); border: 1px solid #b7eb8f; color: #237804; }
+    .status-banner.danger  { background: var(--danger-bg);  border: 1px solid #ffccc7; color: #a8071a; }
+    .status-banner.warn    { background: var(--warning-bg); border: 1px solid #ffe58f; color: #ad6800; }
+    .status-banner .dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+
+    /* Version Info Display */
+    .version-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px; margin-bottom: 16px;
+    }
+    .version-item {
+      background: #f5f7fa; border-radius: 8px; padding: 12px 14px;
+    }
+    .version-item .label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+    .version-item .value { font-size: 16px; font-weight: 700; color: var(--text); margin-top: 2px; }
+    .version-item .value.highlight { color: var(--primary); }
+
+    /* APK List */
+    .apk-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 14px; background: #f5f7fa;
+      border-radius: 8px; margin-bottom: 8px;
+      border: 1px solid transparent;
+      transition: border-color .2s;
+    }
+    .apk-item:hover { border-color: var(--primary); }
+    .apk-item .icon { font-size: 24px; }
+    .apk-item .info { flex: 1; }
+    .apk-item .name { font-weight: 600; font-size: 13px; }
+    .apk-item .meta { font-size: 11.5px; color: var(--muted); margin-top: 1px; }
+    .apk-item .btn { margin: 0; flex-shrink: 0; }
+
+    /* Steps */
+    .steps { margin-bottom: 20px; }
+    .step {
+      display: flex; gap: 14px; margin-bottom: 14px; align-items: flex-start;
+    }
+    .step-num {
+      flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%;
+      background: var(--primary); color: #fff;
+      font-size: 12px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center; margin-top: 2px;
+    }
+    .step-body { flex: 1; }
+    .step-body strong { display: block; font-size: 13.5px; margin-bottom: 3px; }
+    .step-body p { font-size: 12.5px; color: var(--muted); }
+
+    /* Progress / Status */
+    #progressArea { display: none; margin-top: 16px; }
+    #progressArea.show { display: block; }
+    .progress-bar-wrap {
+      background: #e8eaed; border-radius: 999px; height: 8px; overflow: hidden; margin: 8px 0;
+    }
+    .progress-bar-fill {
+      height: 100%; background: var(--primary); border-radius: 999px;
+      width: 0%; transition: width .3s;
+    }
+    #progressText { font-size: 12px; color: var(--muted); text-align: center; }
+
+    /* Server URL */
+    .server-url {
+      display: flex; gap: 8px; align-items: center;
+    }
+    .server-url input { font-family: 'JetBrains Mono', 'Consolas', monospace; font-size: 13px; }
+    .server-url .btn { margin: 0; padding: 9px 14px; white-space: nowrap; width: auto; margin-top: 0; }
+
+    /* Toast */
+    .toast {
+      position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(100px);
+      background: #222; color: #fff; padding: 12px 22px; border-radius: 8px;
+      font-size: 14px; z-index: 9999; opacity: 0;
+      transition: all .3s cubic-bezier(.4,0,.2,1);
+      max-width: 90vw;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    .toast.success { background: #237804; }
+    .toast.error   { background: #a8071a; }
+
+    /* Tabs */
+    .tabs { display: flex; gap: 4px; margin-bottom: 20px; background: #f0f2f5; border-radius: 10px; padding: 4px; }
+    .tab {
+      flex: 1; padding: 8px 12px; border-radius: 7px; text-align: center;
+      font-size: 13.5px; font-weight: 600; cursor: pointer; transition: all .2s;
+      color: var(--muted);
+    }
+    .tab.active { background: var(--card); color: var(--primary); box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    pre {
+      background: #1e1e2e; color: #cdd6f4;
+      border-radius: 8px; padding: 14px 16px;
+      font-size: 12.5px; line-height: 1.6;
+      overflow-x: auto; margin: 10px 0;
+    }
+    code { font-family: 'JetBrains Mono', 'Consolas', monospace; }
+    code.inline { background: #f0f0f5; padding: 1px 6px; border-radius: 4px; font-size: 12px; color: var(--primary); }
+  </style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <span class="logo">⚙️ CareLink</span>
+  <span class="sub">App 部署管理</span>
+  <span class="tag" id="serverStatusTag">后端未连接</span>
+</div>
+
+<div class="container">
+
+  <!-- Server URL Config -->
+  <div class="card" style="margin-bottom:16px">
+    <div class="card-title"><span class="icon">🌐</span> 服务器地址</div>
+    <div class="server-url">
+      <input type="text" id="serverUrl" value="http://140.143.139.16:8080"
+             placeholder="输入后端服务器地址，如 http://140.143.139.16:8080">
+      <button class="btn btn-secondary" onclick="loadVersionInfo()">🔄 检测连接</button>
+    </div>
+    <div class="form-hint">修改地址后点击"检测连接"验证后端是否正常，返回"当前版本信息"即表示连接成功。</div>
+  </div>
+
+  <!-- Current Version Status -->
+  <div class="card">
+    <div class="card-title"><span class="icon">📋</span> 当前发布版本</div>
+    <div class="version-grid" id="versionGrid">
+      <div class="version-item">
+        <div class="label">版本号</div>
+        <div class="value" id="curVersion">—</div>
+      </div>
+      <div class="version-item">
+        <div class="label">Version Code</div>
+        <div class="value highlight" id="curVersionCode">—</div>
+      </div>
+      <div class="version-item">
+        <div class="label">强制更新</div>
+        <div class="value" id="curForce">—</div>
+      </div>
+      <div class="version-item">
+        <div class="label">更新说明</div>
+        <div class="value" style="font-size:12px;font-weight:400" id="curMessage">—</div>
+      </div>
+    </div>
+    <div id="curDownloadUrl" style="margin-top:8px;font-size:12px;color:var(--muted);display:none">
+      下载地址：<code class="inline" id="curDownloadLink" style="word-break:break-all"></code>
+    </div>
+    <button class="btn btn-secondary btn-sm" style="margin-top:12px" onclick="loadVersionInfo()">🔄 刷新版本信息</button>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab('upload', this)">📦 上传新版 APK</div>
+    <div class="tab" onclick="switchTab('list', this)">📁 APK 文件列表</div>
+    <div class="tab" onclick="switchTab('guide', this)">📖 使用说明</div>
+  </div>
+
+  <!-- Tab: Upload -->
+  <div class="tab-content active" id="tab-upload">
+    <div class="card">
+      <div class="card-title"><span class="icon">🚀</span> 一键上传 & 发布</div>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:16px">
+        上传 APK 文件后，版本信息自动写入数据库，App 端打开即可检测到新版本并提示下载安装。
+      </p>
+
+      <!-- File Upload -->
+      <div class="form-group">
+        <label class="form-label">选择 APK 文件 <span class="req">*</span></label>
+        <div class="upload-zone" id="uploadZone">
+          <input type="file" id="apkFile" accept=".apk" onchange="onFileSelected(this)">
+          <div class="icon">📱</div>
+          <div class="title">点击或拖拽上传 APK</div>
+          <div class="hint">支持 .apk 格式，建议文件大小不超过 150 MB</div>
+        </div>
+        <div id="fileInfo"></div>
+      </div>
+
+      <!-- Version Info -->
+      <div class="two-col">
+        <div class="form-group">
+          <label class="form-label">版本号 <span class="req">*</span></label>
+          <input type="text" id="newVersion" placeholder="如：1.2.0" value="">
+          <div class="form-hint">App 显示的版本号，如 1.1.0</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Version Code <span class="req">*</span></label>
+          <input type="number" id="newVersionCode" placeholder="如：12" value="">
+          <div class="form-hint">整数，必须比当前版本大</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">更新说明</label>
+        <textarea id="newMessage" placeholder="如：优化首页加载速度，修复已知问题，提升稳定性"></textarea>
+      </div>
+
+      <div class="toggle-row">
+        <label class="toggle">
+          <input type="checkbox" id="newForceUpdate">
+          <span class="slider"></span>
+        </label>
+        <div class="toggle-label">
+          <strong>强制更新</strong> — 开启后，用户不更新将无法继续使用 App
+        </div>
+      </div>
+
+      <button class="btn btn-primary" id="uploadBtn" onclick="doUpload()" disabled>
+        🚀 上传并发布新版本
+      </button>
+
+      <!-- Progress -->
+      <div id="progressArea">
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" id="progressFill"></div>
+        </div>
+        <div id="progressText">上传中...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab: APK List -->
+  <div class="tab-content" id="tab-list">
+    <div class="card">
+      <div class="card-title">
+        <span class="icon">📁</span> 已上传的 APK 文件
+        <button class="btn btn-secondary btn-sm" style="margin-left:auto" onclick="loadApkList()">🔄 刷新</button>
+      </div>
+      <div id="apkListArea">
+        <div style="text-align:center;padding:30px;color:var(--muted);font-size:13px">
+          点击"刷新"加载文件列表
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab: Guide -->
+  <div class="tab-content" id="tab-guide">
+    <div class="card">
+      <div class="card-title"><span class="icon">📖</span> 完整操作流程</div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>编译生成新 APK</strong>
+            <p>在 Android Studio 中编译 Debug 或 Release 版本，导出 APK 文件。</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>打开本页面，填入服务器地址</strong>
+            <p>确保服务器后端已启动（java -jar 运行中），点击"检测连接"验证。</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>切换到"上传新版 APK"标签</strong>
+            <p>点击上传区域选择 APK 文件，填写版本号、Version Code 和更新说明。</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <strong>点击"上传并发布新版本"</strong>
+            <p>APK 上传到服务器，版本信息写入数据库，全程自动完成。</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="step-body">
+            <strong>用户打开 App 自动检测更新</strong>
+            <p>App 登录后自动调用版本检测接口，发现新版本弹出更新提示框。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="status-banner warn">
+        <div class="dot"></div>
+        <div>
+          <strong>⚠️ 注意事项</strong><br>
+          1. 每次发布新版本前，需确保 <strong>Version Code</strong> 比上一次大（整数递增）<br>
+          2. APK 文件会上传到服务器 <code>C:/carelink/uploads/apk/</code> 目录<br>
+          3. 本管理接口目前无密码保护，建议仅在内网或通过 VPN 访问<br>
+          4. 强制更新会阻止用户跳过，建议非紧急情况不开启
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">🔧</span> 手动操作（备用）</div>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:12px">
+        如果不想用网页，也可以直接操作数据库或调用 API。
+      </p>
+      <strong style="font-size:13px">① 直接操作数据库（宝塔 → phpMyAdmin）</strong>
+      <pre><code>-- 修改版本号（versionCode 必须大于当前）
+UPDATE app_configs SET config_value = '12' WHERE config_key = 'app.version_code';
+UPDATE app_configs SET config_value = '1.2.0' WHERE config_key = 'app.version';
+UPDATE app_configs SET config_value = '优化性能，修复已知问题' WHERE config_key = 'app.update_message';
+UPDATE app_configs SET config_value = 'http://140.143.139.16:8080/api/admin/download-apk/你的APK文件名.apk'
+  WHERE config_key = 'app.download_url';</code></pre>
+
+      <strong style="font-size:13px;margin-top:12px;display:block">② cURL 命令行方式</strong>
+      <pre><code># 上传 APK（PowerShell 格式）
+$body = @{
+    file = Get-Item "C:\path\to\app-debug.apk"
+    version = "1.2.0"
+    versionCode = 12
+    message = "优化性能"
+    forceUpdate = "false"
+}
+Invoke-RestMethod -Uri "http://140.143.139.16:8080/api/admin/upload-apk" `
+  -Method Post -Form $body</code></pre>
+
+      <strong style="font-size:13px;margin-top:12px;display:block">③ 手动上传 APK + 修改版本</strong>
+      <p style="font-size:12.5px;color:var(--muted)">
+        将 APK 文件复制到服务器 <code>C:/carelink/uploads/apk/</code> 目录，<br>
+        然后用宝塔 phpMyAdmin 在 <code>app_configs</code> 表中手动更新 4 条记录。
+      </p>
+    </div>
+  </div>
+
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+  // ─── State ───────────────────────────────────────────────────────
+  let selectedFile = null;
+  let currentVersionCode = 0;
+  const serverUrl = () => document.getElementById('serverUrl').value.replace(/\/$/, '');
+
+  // ─── Init ────────────────────────────────────────────────────────
+  window.addEventListener('DOMContentLoaded', () => {
+    loadVersionInfo();
+  });
+
+  // ─── Tabs ────────────────────────────────────────────────────────
+  function switchTab(name, el) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById('tab-' + name).classList.add('active');
+    if (name === 'list') loadApkList();
+  }
+
+  // ─── Toast ───────────────────────────────────────────────────────
+  function toast(msg, type = 'info') {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = 'toast ' + type;
+    setTimeout(() => t.classList.add('show'), 10);
+    setTimeout(() => t.classList.remove('show'), 3200);
+  }
+
+  // ─── Detect Connection ──────────────────────────────────────────
+  async function loadVersionInfo() {
+    const url = serverUrl() + '/api/admin/version-info';
+    try {
+      const resp = await fetch(url);
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      const json = await resp.json();
+      if (json.code === 200 && json.data) {
+        const d = json.data;
+        document.getElementById('curVersion').textContent     = d.version;
+        document.getElementById('curVersionCode').textContent = d.versionCode;
+        document.getElementById('curForce').textContent       = d.forceUpdate === 'true' ? '是 ⚠️' : '否';
+        document.getElementById('curMessage').textContent     = d.message || '—';
+
+        if (d.downloadUrl) {
+          document.getElementById('curDownloadUrl').style.display = 'block';
+          document.getElementById('curDownloadLink').textContent  = d.downloadUrl;
+        }
+
+        currentVersionCode = parseInt(d.versionCode) || 0;
+
+        // 预填上传表单
+        document.getElementById('newVersion').value = d.version || '';
+        document.getElementById('newVersionCode').value = (currentVersionCode + 1);
+
+        document.getElementById('serverStatusTag').textContent = '✅ 后端正常';
+        document.getElementById('serverStatusTag').style.background = 'var(--success-bg)';
+        document.getElementById('serverStatusTag').style.color = '#237804';
+      } else {
+        throw new Error(json.message || '未知错误');
+      }
+    } catch (e) {
+      document.getElementById('serverStatusTag').textContent = '❌ 连接失败';
+      document.getElementById('serverStatusTag').style.background = 'var(--danger-bg)';
+      document.getElementById('serverStatusTag').style.color = '#a8071a';
+      toast('后端连接失败：' + e.message, 'error');
+    }
+  }
+
+  // ─── File Selection ──────────────────────────────────────────────
+  function onFileSelected(input) {
+    const file = input.files[0];
+    if (!file) return;
+    if (!file.name.toLowerCase().endsWith('.apk')) {
+      toast('只支持 .apk 格式文件', 'error');
+      input.value = '';
+      return;
+    }
+    selectedFile = file;
+    const sizeMB = (file.size / 1024 / 1024).toFixed(1);
+    const info = document.getElementById('fileInfo');
+    info.innerHTML = `✅ 已选择：<strong>${file.name}</strong>（${sizeMB} MB）`;
+    info.classList.add('show');
+
+    // 自动从文件名提取版本号
+    autoFillVersion(file.name);
+
+    document.getElementById('uploadBtn').disabled = false;
+  }
+
+  function autoFillVersion(fileName) {
+    // 尝试从文件名提取版本号，如 CareLink_v1_2_0_build12_20260409.apk
+    const patterns = [
+      /v?(\d+_\d+_\d+)/,
+      /v?(\d+\.\d+\.\d+)/,
+      /build[_-]?(\d+)/,
+    ];
+    // 提取 versionCode（build 后数字）
+    const buildMatch = fileName.match(/build[_-]?(\d+)/i);
+    if (buildMatch) {
+      document.getElementById('newVersionCode').value = buildMatch[1];
+    }
+    // 提取版本字符串
+    const verMatch = fileName.match(/v?(\d+[._]\d+[._]\d+)/);
+    if (verMatch) {
+      const ver = verMatch[1].replace(/_/g, '.');
+      document.getElementById('newVersion').value = ver;
+    }
+  }
+
+  // ─── Upload ──────────────────────────────────────────────────────
+  async function doUpload() {
+    if (!selectedFile) { toast('请先选择 APK 文件', 'error'); return; }
+    const version = document.getElementById('newVersion').value.trim();
+    const versionCode = parseInt(document.getElementById('newVersionCode').value);
+    if (!version) { toast('版本号不能为空', 'error'); return; }
+    if (!versionCode || versionCode <= 0) { toast('Version Code 必须大于 0', 'error'); return; }
+    if (versionCode <= currentVersionCode) {
+      toast('Version Code（' + versionCode + '）必须比当前版本（' + currentVersionCode + '）更大', 'error');
+      return;
+    }
+
+    const btn = document.getElementById('uploadBtn');
+    btn.disabled = true;
+    btn.textContent = '⏳ 上传中，请勿关闭页面...';
+
+    const progressArea = document.getElementById('progressArea');
+    const progressFill = document.getElementById('progressFill');
+    const progressText = document.getElementById('progressText');
+    progressArea.classList.add('show');
+    progressFill.style.width = '0%';
+    progressText.textContent = '准备上传...';
+
+    const formData = new FormData();
+    formData.append('file', selectedFile);
+    formData.append('version', version);
+    formData.append('versionCode', versionCode);
+    formData.append('message', document.getElementById('newMessage').value.trim() || '优化性能，修复已知问题');
+    formData.append('forceUpdate', document.getElementById('newForceUpdate').checked);
+
+    try {
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', serverUrl() + '/api/admin/upload-apk');
+      xhr.upload.addEventListener('progress', e => {
+        if (e.lengthComputable) {
+          const pct = Math.round(100 * e.loaded / e.total);
+          progressFill.style.width = pct + '%';
+          progressText.textContent = `上传中... ${pct}%`;
+        }
+      });
+      xhr.addEventListener('load', () => {
+        btn.disabled = false;
+        btn.textContent = '🚀 上传并发布新版本';
+        progressFill.style.width = '100%';
+        progressText.textContent = '处理完成';
+
+        if (xhr.status >= 200 && xhr.status < 300) {
+          const json = JSON.parse(xhr.responseText);
+          if (json.code === 200) {
+            toast('🎉 发布成功！App 端将检测到新版本', 'success');
+            // 重置表单
+            selectedFile = null;
+            document.getElementById('apkFile').value = '';
+            document.getElementById('fileInfo').classList.remove('show');
+            document.getElementById('fileInfo').textContent = '';
+            // 刷新版本信息
+            setTimeout(() => {
+              loadVersionInfo();
+              progressArea.classList.remove('show');
+            }, 1500);
+          } else {
+            toast('发布失败：' + json.message, 'error');
+            progressArea.classList.remove('show');
+          }
+        } else {
+          try {
+            const err = JSON.parse(xhr.responseText);
+            toast('发布失败：' + (err.message || 'HTTP ' + xhr.status), 'error');
+          } catch (_) {
+            toast('发布失败：HTTP ' + xhr.status, 'error');
+          }
+          progressArea.classList.remove('show');
+        }
+      });
+      xhr.addEventListener('error', () => {
+        btn.disabled = false;
+        btn.textContent = '🚀 上传并发布新版本';
+        toast('网络错误，上传失败', 'error');
+        progressArea.classList.remove('show');
+      });
+      xhr.send(formData);
+
+    } catch (e) {
+      btn.disabled = false;
+      btn.textContent = '🚀 上传并发布新版本';
+      toast('上传失败：' + e.message, 'error');
+      progressArea.classList.remove('show');
+    }
+  }
+
+  // ─── APK List ────────────────────────────────────────────────────
+  async function loadApkList() {
+    const area = document.getElementById('apkListArea');
+    area.innerHTML = '<div style="text-align:center;padding:30px;color:var(--muted)">⏳ 加载中...</div>';
+    try {
+      const resp = await fetch(serverUrl() + '/api/admin/apk-list');
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      const json = await resp.json();
+      if (json.code === 200 && json.data) {
+        const { files, downloadBaseUrl } = json.data;
+        if (!files || files.length === 0) {
+          area.innerHTML = '<div style="text-align:center;padding:30px;color:var(--muted)">暂无已上传的 APK 文件</div>';
+          return;
+        }
+        area.innerHTML = files.map(f => `
+          <div class="apk-item">
+            <div class="icon">📱</div>
+            <div class="info">
+              <div class="name">${escapeHtml(f.name)}</div>
+              <div class="meta">${f.size} &nbsp;·&nbsp; ${f.modified}</div>
+            </div>
+            <a class="btn btn-primary btn-sm" href="${downloadBaseUrl}${encodeURIComponent(f.name)}" target="_blank">
+              📥 下载
+            </a>
+          </div>
+        `).join('');
+      } else {
+        throw new Error(json.message);
+      }
+    } catch (e) {
+      area.innerHTML = '<div style="text-align:center;padding:30px;color:var(--danger)">加载失败：' + e.message + '</div>';
+    }
+  }
+
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+</script>
+
+</body>
+</html>

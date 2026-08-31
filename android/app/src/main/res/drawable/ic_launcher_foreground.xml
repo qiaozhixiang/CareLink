@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- 温暖橙粉渐变圆形背景 -->
+    <path
+        android:fillColor="#FF7043"
+        android:pathData="M54,54m-54,0a54,54 0,1 1,108 0a54,54 0,1 1,-108 0"/>
+
+    <!-- 房屋顶部（圆顶小屋） -->
+    <path
+        android:fillColor="#FFD54F"
+        android:pathData="M54,18 L76,36 L74,36 L74,44 L34,44 L34,36 L32,36 Z"/>
+    <!-- 房屋门 -->
+    <path
+        android:fillColor="#FF7043"
+        android:pathData="M49,38 L59,38 L59,44 L49,44 Z"/>
+    <!-- 房屋烟囱 -->
+    <path
+        android:fillColor="#FFAB91"
+        android:pathData="M66,28 L70,28 L70,34 L66,34 Z"/>
+
+    <!-- 五个家人剪影（底部区域） -->
+    <!-- 爷爷（左侧第一个，略驼背） -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M22,60 Q22,52 27,52 Q32,52 32,60 L32,74 L22,74 Z"/>
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M27,52 Q27,46 31,47 Q35,48 34,52 L31,52 Z"/>
+    <!-- 爷爷手杖 -->
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="1.5"
+        android:pathData="M35,50 L35,74"/>
+
+    <!-- 奶奶（左侧第二个，扎辫子） -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M35,61 Q35,53 40,53 Q45,53 45,61 L45,74 L35,74 Z"/>
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M40,53 Q40,46 44,47 Q48,48 47,53 L44,53 Z"/>
+    <!-- 奶奶辫子 -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M44,47 Q46,44 44,42"/>
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M36,47 Q34,44 36,42"/>
+
+    <!-- 爸爸（中间，略高大） -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M48,58 Q48,48 54,48 Q60,48 60,58 L60,74 L48,74 Z"/>
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M54,48 Q54,41 58,41 Q62,41 62,48 L58,48 Z"/>
+
+    <!-- 妈妈（右侧第二） -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M63,61 Q63,53 68,53 Q73,53 73,61 L73,74 L63,74 Z"/>
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M68,53 Q68,46 72,47 Q76,48 75,53 L72,53 Z"/>
+    <!-- 妈妈长发 -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M72,47 Q75,50 75,55 L73,53 Z"/>
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M64,47 Q61,50 61,55 L63,53 Z"/>
+
+    <!-- 孩子（右侧最小） -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M76,68 Q76,62 80,62 Q84,62 84,68 L84,74 L76,74 Z"/>
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M80,62 Q80,56 83,56 Q86,56 86,62 L83,62 Z"/>
+
+    <!-- 牵手弧线 -->
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="1.5"
+        android:pathData="M27,64 Q31,60 35,64"/>
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="1.5"
+        android:pathData="M45,64 Q47,60 48,64"/>
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="1.5"
+        android:pathData="M60,64 Q62,60 63,64"/>
+    <path
+        android:strokeColor="#FFFFFF"
+        android:pathData="M73,64 Q75,62 76,64"/>
+</vector>

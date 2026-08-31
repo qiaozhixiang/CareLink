@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_family">
+
+    <!-- Fragment 容器 -->
+    <FrameLayout
+        android:id="@+id/family_content_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!-- 分割线 -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/md3_outline_variant" />
+
+    <!-- 底部导航（家属端用紫色） -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/family_bottom_nav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/md3_surface"
+        app:menu="@menu/menu_family_bottom"
+        app:labelVisibilityMode="labeled"
+        app:itemIconTint="@color/nav_family_icon_tint"
+        app:itemTextColor="@color/nav_family_icon_tint"
+        app:elevation="0dp"
+        android:paddingBottom="4dp" />
+
+</LinearLayout>

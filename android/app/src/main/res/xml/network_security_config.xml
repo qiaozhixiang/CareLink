@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- 允许明文流量（HTTP），用于连接后端服务器 -->
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+    
+    <!-- 信任特定后端服务器 -->
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">121.196.206.75</domain>
+        <domain includeSubdomains="true">140.143.139.16</domain>
+        <domain includeSubdomains="true">api.carelink.com</domain>
+    </domain-config>
+
+    <!-- AI 服务（千问模型，火山引擎）- 走 HTTPS -->
+    <domain-config>
+        <domain includeSubdomains="true">ark.cn-beijing.volces.com</domain>
+        <domain includeSubdomains="true">ark.cn-shanghai.volces.com</domain>
+    </domain-config>
+</network-security-config>
+

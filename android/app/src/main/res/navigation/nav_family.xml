@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_family"
+    app:startDestination="@id/dashboardFragment">
+
+    <fragment
+        android:id="@+id/dashboardFragment"
+        android:name="com.carelink.app.ui.family.DashboardFragment"
+        android:label="总览" />
+
+    <fragment
+        android:id="@+id/alertCenterFragment"
+        android:name="com.carelink.app.ui.alert.AlertCenterFragment"
+        android:label="异常" />
+
+    <fragment
+        android:id="@+id/calendarFragment"
+        android:name="com.carelink.app.ui.calendar.CalendarFragment"
+        android:label="日历" />
+
+    <fragment
+        android:id="@+id/notesFragment"
+        android:name="com.carelink.app.ui.notes.NotesFragment"
+        android:label="备注" />
+
+    <fragment
+        android:id="@+id/shiftFragment"
+        android:name="com.carelink.app.ui.shift.ShiftFragment"
+        android:label="轮值" />
+
+    <fragment
+        android:id="@+id/memberFragment"
+        android:name="com.carelink.app.ui.family.MemberFragment"
+        android:label="成员" />
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.carelink.app.ui.settings.SettingsFragment"
+        android:label="设置" />
+
+</navigation>

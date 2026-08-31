@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.BODY_SENSORS" />
+    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission
+        android:name="android.permission.QUERY_ALL_PACKAGES"
+        tools:ignore="QueryAllPackagesPermission" />
+
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <!-- 远程协助权限 -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent>
+        <package android:name="com.tencent.mm" />
+        <package android:name="com.tencent.mobileqq" />
+        <package android:name="com.ss.android.ugc.aweme" />
+        <package android:name="com.smile.gifmaker" />
+    </queries>
+
+
+    <application
+        android:name=".CareLinkApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:usesCleartextTraffic="true"
+        android:theme="@style/Theme.CareLinkApp">
+
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="17940927b676dc67f6d8198bd2571939" />
+
+        <!-- 登录 -->
+        <activity
+            android:name=".ui.auth.LoginActivity"
+            android:exported="true"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!-- 家庭码深度链接：支持 carelink://family?code=xxx&page=xxx -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="carelink" android:host="family" />
+            </intent-filter>
+            <!-- HTTPS 深度链接：https://yiyangjia.com/family?code=xxx&page=xxx -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="https"
+                    android:host="yiyangjia.com"
+                    android:pathPrefix="/family" />
+            </intent-filter>
+        </activity>
+
+        <!-- 独立注册 -->
+        <activity
+            android:name=".ui.auth.RegisterActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <!-- 忘记密码 -->
+        <activity
+            android:name=".ui.auth.ForgotPasswordActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <!-- 身份选择 -->
+        <activity
+            android:name=".ui.auth.RoleSelectActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <!-- 老人主界面 -->
+        <activity
+            android:name=".ui.elder.ElderMainActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.CareLinkApp.Elder" />
+
+        <activity
+            android:name=".ui.elder.ElderFamilyMembersActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.CareLinkApp.Elder" />
+
+        <!-- 家属主界面 -->
+        <activity
+            android:name=".ui.family.FamilyMainActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.CareLinkApp.Family" />
+
+        <!-- 地图测试页 -->
+        <activity
+            android:name=".ui.map.MapPreviewActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <!-- 复诊预约编辑 -->
+        <activity
+            android:name=".ui.calendar.AppointmentEditActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <!-- 设置页 -->
+        <activity
+            android:name=".ui.settings.SettingsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <!-- 万年历 -->
+        <activity
+            android:name=".ui.calendar.PerpetualCalendarActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <!-- 家庭绑定页 -->
+        <activity
+            android:name=".ui.family.JoinFamilyActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <!-- 老人端 - 远程协助 -->
+        <activity
+            android:name=".remote.ElderRemoteAssistActivity"
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.CareLinkApp.Elder" />
+
+        <!-- 家属端 - 远程协助观看 -->
+        <activity
+            android:name=".remote.FamilyRemoteViewerActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.CareLinkApp.Family" />
+
+        <!-- 屏幕捕获前台服务 -->
+        <service
+            android:name=".remote.ScreenCaptureService"
+            android:foregroundServiceType="mediaProjection"
+            android:exported="false" />
+
+        <!-- 摔倒检测前台服务 -->
+        <service
+            android:name=".service.FallDetectionService"
+            android:foregroundServiceType="health"
+            android:exported="false" />
+
+        <!-- 开机广播 -->
+        <receiver
+            android:name=".receiver.BootReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- 提醒广播 -->
+        <receiver
+            android:name=".receiver.ReminderReceiver"
+            android:exported="false" />
+
+        <!-- FileProvider 用于应用更新安装 -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <!-- 禁用 WorkManager 默认自动初始化，改由 CareLinkApplication 通过 HiltWorkerFactory 手动初始化 -->
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+            <meta-data
+                android:name="androidx.work.WorkManagerInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
+        </provider>
+
+    </application>
+
+</manifest>

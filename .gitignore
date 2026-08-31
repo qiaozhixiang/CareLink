@@ -1,0 +1,27 @@
+# Gradle and IDE caches
+.gradle/
+**/.gradle/
+**/build/
+.idea/
+*.iml
+
+# Android local files
+local.properties
+*.keystore
+*.jks
+
+# Packaged build outputs
+artifacts/
+*.apk
+*.aab
+*.jar
+
+# Local runtime files
+logs/
+uploads/
+
+# Local secrets and environment-specific configuration
+backend/src/main/resources/application.properties
+backend/src/main/resources/application-prod.properties
+*.env
+*.env.*

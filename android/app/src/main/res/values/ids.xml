@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="elder_content_container" type="id" />
+    <item name="family_content_container" type="id" />
+    <item name="elder_bottom_nav" type="id" />
+    <item name="family_bottom_nav" type="id" />
+</resources>

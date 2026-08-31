@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">颐养家</string>
+
+    <!-- 登录 -->
+    <string name="login">登录</string>
+    <string name="send_code">发送验证码</string>
+    <string name="phone_hint">请输入手机号</string>
+    <string name="code_hint">请输入验证码</string>
+
+    <!-- 角色 -->
+    <string name="role_elder">我是老人</string>
+    <string name="role_family">我是家属</string>
+    <string name="select_role">请选择您的身份</string>
+
+    <!-- 老人端 -->
+    <string name="elder_home">首页</string>
+    <string name="elder_checkin">打卡</string>
+    <string name="elder_emergency">紧急</string>
+    <string name="elder_contact">家属</string>
+    <string name="elder_schedule">日程</string>
+    <string name="elder_settings">设置</string>
+
+    <!-- 家属端 -->
+    <string name="family_dashboard">总览</string>
+    <string name="family_alert">异常</string>
+    <string name="family_calendar">日历</string>
+    <string name="family_notes">备注</string>
+    <string name="family_shift">轮值</string>
+    <string name="family_member">成员</string>
+    <string name="family_settings">设置</string>
+
+    <!-- 打卡 -->
+    <string name="checkin_medicine">服药</string>
+    <string name="checkin_water">喝水</string>
+    <string name="checkin_walk">散步</string>
+    <string name="checkin_bp">血压</string>
+    <string name="checkin_bs">血糖</string>
+    <string name="checkin_sleep">睡眠</string>
+
+    <!-- 异常 -->
+    <string name="alert_center">异常中心</string>
+    <string name="alert_no_pending">暂无待处理异常</string>
+
+    <!-- 设置 -->
+    <string name="settings_voice">语音播报</string>
+    <string name="settings_font">字体大小</string>
+    <string name="logout">退出登录</string>
+
+    <!-- 紧急 -->
+    <string name="emergency_sos">SOS</string>
+    <string name="emergency_feel_bad">感觉不舒服</string>
+</resources>

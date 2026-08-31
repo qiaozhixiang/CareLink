@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.CareLinkApp" parent="Theme.Material3.Light.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimaryContainer">@color/primary_light</item>
+        <item name="colorOnPrimaryContainer">@color/elder_on_primary_container</item>
+        <item name="colorSecondary">@color/accent</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorTertiary">@color/family_secondary</item>
+        <item name="android:colorBackground">@color/md3_background</item>
+        <item name="colorSurface">@color/md3_surface</item>
+        <item name="colorSurfaceVariant">@color/md3_surface_variant</item>
+        <item name="colorOnSurface">@color/md3_on_surface</item>
+        <item name="colorOnSurfaceVariant">@color/md3_on_surface_variant</item>
+        <item name="colorOutline">@color/md3_outline</item>
+        <item name="colorOutlineVariant">@color/md3_outline_variant</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:navigationBarColor">@color/md3_surface</item>
+        <item name="shapeAppearanceSmallComponent">@style/ShapeSmall</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeMedium</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeLarge</item>
+    </style>
+
+    <style name="Theme.CareLinkApp.Elder" parent="Theme.CareLinkApp">
+        <item name="colorPrimary">@color/elder_primary</item>
+        <item name="colorOnPrimary">@color/elder_on_primary</item>
+        <item name="colorPrimaryContainer">@color/elder_primary_container</item>
+        <item name="colorSecondary">@color/elder_secondary</item>
+        <item name="colorOnSecondary">@color/elder_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/elder_secondary_container</item>
+        <item name="android:colorBackground">@color/bg_elder</item>
+    </style>
+
+    <style name="Theme.CareLinkApp.Family" parent="Theme.CareLinkApp">
+        <item name="colorPrimary">@color/family_primary</item>
+        <item name="colorOnPrimary">@color/family_on_primary</item>
+        <item name="colorPrimaryContainer">@color/family_primary_container</item>
+        <item name="colorSecondary">@color/family_secondary</item>
+        <item name="colorOnSecondary">@color/family_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/family_secondary_container</item>
+        <item name="android:colorBackground">@color/bg_family</item>
+    </style>
+
+    <style name="Theme.CareLinkApp.Splash" parent="Theme.CareLinkApp">
+        <item name="android:windowBackground">@color/md3_background</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+
+    <style name="ShapeSmall" parent="ShapeAppearance.Material3.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">12dp</item>
+    </style>
+
+    <style name="ShapeMedium" parent="ShapeAppearance.Material3.MediumComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+
+    <style name="ShapeLarge" parent="ShapeAppearance.Material3.LargeComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">20dp</item>
+    </style>
+
+    <style name="Widget.CareLinkApp.Button.Primary" parent="Widget.Material3.Button">
+        <item name="android:minHeight">56dp</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.01</item>
+        <item name="cornerRadius">12dp</item>
+        <item name="android:elevation">3dp</item>
+        <item name="backgroundTint">@color/elder_primary</item>
+    </style>
+
+    <style name="Widget.CareLinkApp.Button.Outline" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:minHeight">52dp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="cornerRadius">12dp</item>
+        <item name="strokeColor">@color/md3_outline_variant</item>
+        <item name="android:textColor">@color/text_secondary</item>
+    </style>
+
+    <style name="Widget.CareLinkApp.Button.Emergency" parent="Widget.Material3.Button">
+        <item name="backgroundTint">@color/emergency_red</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="cornerRadius">100dp</item>
+        <item name="android:elevation">6dp</item>
+    </style>
+
+    <style name="Widget.CareLinkApp.Card" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardCornerRadius">16dp</item>
+        <item name="cardElevation">2dp</item>
+        <item name="cardBackgroundColor">@color/md3_surface</item>
+    </style>
+
+    <style name="Widget.CareLinkApp.Card.Filled" parent="Widget.Material3.CardView.Filled">
+        <item name="cardCornerRadius">16dp</item>
+        <item name="cardElevation">0dp</item>
+        <item name="cardBackgroundColor">@color/md3_surface_container</item>
+    </style>
+
+    <style name="TextAppearance.CareLinkApp.DisplayLarge" parent="TextAppearance.Material3.HeadlineLarge">
+        <item name="android:textSize">28sp</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearance.CareLinkApp.TitleLarge" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearance.CareLinkApp.BodyLarge" parent="TextAppearance.Material3.BodyLarge">
+        <item name="android:textSize">17sp</item>
+        <item name="android:textColor">@color/text_primary</item>
+    </style>
+
+    <style name="TextAppearance.CareLinkApp.LabelMedium" parent="TextAppearance.Material3.LabelMedium">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/text_secondary</item>
+    </style>
+
+    <style name="Widget.CareLinkApp.TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxBackgroundMode">outline</item>
+        <item name="boxCornerRadiusTopStart">10dp</item>
+        <item name="boxCornerRadiusTopEnd">10dp</item>
+        <item name="boxCornerRadiusBottomStart">10dp</item>
+        <item name="boxCornerRadiusBottomEnd">10dp</item>
+        <item name="boxBackgroundColor">@color/action_neutral</item>
+        <item name="boxStrokeColor">@color/md3_outline_variant</item>
+        <item name="hintTextColor">@color/text_muted</item>
+        <item name="android:minHeight">56dp</item>
+    </style>
+
+    <style name="Widget.CareLinkApp.BottomNavigation" parent="Widget.Material3.BottomNavigationView">
+        <item name="android:background">@color/md3_surface</item>
+        <item name="elevation">0dp</item>
+    </style>
+
+</resources>

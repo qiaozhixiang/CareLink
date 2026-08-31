@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_family">
+
+    <!-- 顶部标题区 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/md3_surface"
+        android:padding="20dp"
+        android:paddingTop="28dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:elevation="2dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="异常中心"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="处理老人健康异常事件"
+                android:textSize="13sp"
+                android:textColor="@color/text_secondary"
+                android:layout_marginTop="4dp" />
+        </LinearLayout>
+
+        <!-- 未读角标 -->
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@drawable/ic_alert"
+                android:tint="@color/family_primary"
+                android:background="@drawable/bg_icon_circle_purple"
+                android:padding="8dp" />
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <!-- 筛选栏 -->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="12dp"
+        android:background="@color/md3_surface">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:text="全部"
+                android:textSize="13sp"
+                android:textColor="@color/white"
+                android:background="@drawable/bg_filter_selected"
+                android:paddingHorizontal="16dp"
+                android:gravity="center"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:text="未处理"
+                android:textSize="13sp"
+                android:textColor="@color/emergency_red"
+                android:background="@drawable/bg_filter_unselected"
+                android:paddingHorizontal="16dp"
+                android:gravity="center"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:text="已处理"
+                android:textSize="13sp"
+                android:textColor="@color/text_secondary"
+                android:background="@drawable/bg_filter_unselected"
+                android:paddingHorizontal="16dp"
+                android:gravity="center" />
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <!-- 告警列表 -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_alerts"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingHorizontal="12dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="16dp"
+        android:clipToPadding="false" />
+
+</LinearLayout>

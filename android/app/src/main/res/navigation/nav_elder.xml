@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_elder"
+    app:startDestination="@id/elderHomeFragment">
+
+    <fragment
+        android:id="@+id/elderHomeFragment"
+        android:name="com.carelink.app.ui.elder.ElderHomeFragment"
+        android:label="首页" />
+
+    <fragment
+        android:id="@+id/todayTaskFragment"
+        android:name="com.carelink.app.ui.elder.TodayTaskFragment"
+        android:label="打卡" />
+
+    <fragment
+        android:id="@+id/emergencyFragment"
+        android:name="com.carelink.app.ui.elder.EmergencyFragment"
+        android:label="紧急" />
+
+    <fragment
+        android:id="@+id/familyContactFragment"
+        android:name="com.carelink.app.ui.elder.FamilyContactFragment"
+        android:label="家属" />
+
+    <fragment
+        android:id="@+id/scheduleFragment"
+        android:name="com.carelink.app.ui.elder.ScheduleFragment"
+        android:label="日程" />
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.carelink.app.ui.settings.SettingsFragment"
+        android:label="设置" />
+
+</navigation>
